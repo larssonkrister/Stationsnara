@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 """Stationsnära samhällen, webserver that implements a demonstrator.
 
 This version is browser only where the web browser plays the videos
@@ -14,18 +11,19 @@ import time
 import json
 import os
 import re
-
+import threading
+import webbrowser
+import random
 import flask
 from flask import Flask, request, make_response, render_template
 
 __version__ = '0.1.0'
 
 app_dir = os.path.dirname(os.path.realpath(__file__))
-media_dir =  os.path.join('static', 'media')
 
-img_dir = os.path.join('static', 'media' 'img')
+img_dir = os.path.normpath('static/media/img')
 snd_dir = os.path.normpath('static/media/audio/')
-video_dir = 'static/media/video/'
+video_dir = os.path.normpath('static/media/video/')
 
 verbose = False
 debug = False
@@ -45,7 +43,7 @@ class SNS(object):
         self.height_idx = 0
 
     def load_configuration(self):
-        with open('config.json', 'r') as f:
+        with open('config.json', 'r', encoding='utf-8') as f:
             self.config = json.load(f)
 
     def scan_audio_files(self):
@@ -152,7 +150,7 @@ class SNS(object):
         height = self.heights[height_idx] 
         c = list(filter(lambda i: i['dist'] == dist, train_data[train][abatment]))
         
-        return os.path.join('/' + snd_dir + train_data[train]['audio'])
+        return os.path.join('/' + snd_dir , train_data[train]['audio'])
         
     def responce_data(self, abatment_info=False):
         if verbose:
@@ -173,8 +171,8 @@ class SNS(object):
         #height = self.config['heights'][self.height_idx]
         item = self.find_item(train, abatment, distance, height)
         
-        audio =  os.path.join('/', snd_dir + item['audio'] + self.audio_ext)
-        video =  os.path.join('/', video_dir + self.video_file(train, abatment, distance , height))
+        audio =  os.path.join('/', snd_dir , item['audio'] + self.audio_ext)
+        video =  os.path.join('/', video_dir , self.video_file(train, abatment, distance , height))
         
         if abatment_info:
             abat = self.config['abatments'][self.abatment_idx]['type']
@@ -217,9 +215,10 @@ def main_page():
     train = 0
     action = 0
     response = make_response(flask.render_template('index.html',config=sns.config))
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate" # HTTP 1.1.
-    response.headers["Pragma"] = "no-cache" # HTTP 1.0.
-    response.headers["Expires"] = "0" # Proxies.
+    #response.headers["Content-Type"] = "application/json"
+    #response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate" # HTTP 1.1.
+    #response.headers["Pragma"] = "no-cache" # HTTP 1.0.
+    #response.headers["Expires"] = "0" # Proxies.
     return response
 
 @app.route('/train',methods=['GET', 'POST'] )
@@ -258,7 +257,7 @@ def wb(id):
 
 @app.route('/version')
 def versions():
-    s = ("demo version: {}<br>python version: {}<br>flask version: {}<br>osc package: {}"
+    s = ("sns_demo version: {}<br>python version: {}<br>flask version: {}"
         .format(__version__,
                 platform.python_version(),
                 flask.__version__
@@ -287,9 +286,19 @@ if __name__ == "__main__":
     if not debug:
         verbose = args.verbose
 
-    if verbose: print(platform.python_version())
-    sns = SNS()
-    if verbose: print(sns.config)
         
-    app.run(host='127.0.0.1', port=5000, debug=debug)
+    if verbose: print('Restart_________________________________________________________________________')    
+    if verbose: print('Python version: {}'.format(platform.python_version()))
+    if verbose: print('Flask version: {}'.format(flask.__version__))
+    sns = SNS()
+    if verbose: print('config.json:\n', sns.config)
+
+    
+
+    port = 5000 + random.randint(0, 999)
+    url = "http://127.0.0.1:{0}".format(port)
+
+    threading.Timer(1.25, lambda: webbrowser.get('windows-default').open(url) ).start()
+
+    app.run(host='127.0.0.1', port=port, debug=debug)
 
