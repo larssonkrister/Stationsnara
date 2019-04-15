@@ -1,0 +1,391 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+	<title></title>
+	<!-- <meta content=""/>-->
+	<meta charset="UTF-8"/>
+	<style>
+	 select {
+             padding: 8px 16px;
+             margin: 0px 0px;
+             font-size: 16px;
+	 }
+	 .main {
+             display: flex;
+             justify-content: center;
+             background-color: Blue;
+	     flex-direction: column;
+             margin: 0px;
+	     font-size: 16px;
+	 }
+	 .top {
+             display: flex;
+	     flex: 30%;
+             justify-content: center;
+             background-color: DarkGray;
+	     flex-direction: row;
+             margin: 0px;
+	 }
+	 .left {
+             display: flex;
+	     flex: 30%;
+             justify-content: center;
+             background-color: White;
+	     flex-direction: row;
+             margin: 0px;
+	 }
+	 .center {
+             display: flex;
+	     flex: 30%;
+             justify-content: top;
+             background-color: DarkGray;
+	     flex-direction: row;
+             margin: 20px;
+	 }
+	 .right {
+             display: flex;
+	     flex: 30%;
+             justify-content: top;
+             background-color: White;
+	     flex-direction: column;
+             margin: 0px;
+	     padding: 20px;
+	     align-items: stretch;
+	     align-content: flex-start;
+	 }    
+	 .map {
+             display: flex;
+	     flex: 60%;
+             justify-content: center;
+             background-color: white;
+	     flex-direction: row;
+             margin: 10px;
+	 }
+	 .media {
+             display: flex;
+	     flex: 40%;
+             justify-content: top;
+             background-color: DarkGray;
+	     flex-direction: row;
+             margin: 40px;
+	 }
+	 .abatment {
+             display: flex;
+	     flex: 60%;
+             justify-content: top;
+             background-color: White;
+	     flex-direction: column;
+	     align-items: stretch;
+	     align-content: flex-start;
+	 }
+	 .buttons {
+             display: flex;
+             justify-content: center;
+	     flex-direction: row;
+             margin: 20px;
+	     align-items: stretch;
+	     align-content: flex-end;
+	 }
+	 .bottom {
+             display: flex;
+             justify-content: center;
+             background-color: White;
+	     flex-direction: row;
+	     font-size: 6px;
+	     padding: 20px;
+	     margin: 0px;
+	     align-items: stretch;
+	     align-content: flex-end;
+	 }
+	 .value {
+             display: flex;
+             justify-content: left;
+             background-color: White;
+	     flex-direction: column;
+             margin: 10px;
+	     align-items: stretch;
+	     align-content: flex-end;
+	 }
+	 .flex-container {
+             display: flex;
+             justify-content: center;
+             background-color: DarkGray;
+             margin: 10px;
+
+	 }
+	 .container {
+             display: flex;
+             justify-content: right;
+             background-color: White;
+             align-content: space-between;
+             font-size: 20px;
+	 }
+	 .column {
+             display: flex;
+             justify-content: center;
+             flex-direction: column;
+	     padding: 10px;
+	 }
+	 .column-grey {
+             display: flex;
+             justify-content: center;
+             flex-direction: column;
+             background-color: DarkGray;
+	 }
+	 h1 {
+	     font-family: Arial;
+	     font-size: 24px;
+	 }
+	 h2 {
+	     font-family: Arial;
+	     font-size: 20px;
+	 }
+	 h3 {
+	     font-family: Arial;
+	     font-size: 16px;
+	 }
+	</style>
+    </head>
+    <body>
+	<div class="main">
+	    <div class="top">
+		<div class="left">
+		</div>
+		<div class="centre">
+		    <div class="media">
+			<!--Autoplay only works in Chromium if the video is muted-->
+			<!-- <video id="video" width="640" height="480" muted>-->
+			<video id="video" width="640" height="480" muted mediagroup="train">
+			    <source id="mp4" type="video/mp4" />
+			</video>
+			<!--<audio id="audio" mediagroup="train">-->
+			<audio id="audio">
+			    <source id="wav" type="audio/wav" />
+			</audio>
+		    </div>
+		    <div class="buttons">
+			<button class="btn" onclick="pause()" style="background-color:transparent; border-color:transparent;">
+			    <img src="{{ url_for('static', filename='pause32.png') }}" alt="Snow">
+			</button>
+			<button class="btn" onclick="play()" style="background-color:transparent; border-color:transparent;">
+			    <img src="{{ url_for('static', filename='play32.png') }}" alt="Snow">
+			</button>
+			<button class="btn" onclick="rewind()" style="background-color:transparent; border-color:transparent;">
+			    <img src="{{ url_for('static', filename='rewind32.png') }}" alt="Snow">
+			</button>
+		    </div>
+		</div>
+		<div class="right">
+		    <div><h1 id="abat-heading0"></h1></div>
+		    <div><h2 id="abat-heading1"></h2></div>
+		    <div id="abat-text1" class="text"></div>
+		    <div><h2 id="abat-heading2"></h2></div>
+		    <div id="abat-text2" class="text"></div>
+		    <div><h2 id="abat-heading3"></h2></div>
+		    <div id="abat-text3" class="text"></div>
+		</div>
+	    </div>
+	    <div class="bottom">
+		<div class="container">
+		    <div class="column">
+			<div class="container">
+			    <h3>{{ config['train-label'] }}</h3>
+			</div>	
+			<div class="container">
+			    <select onchange="trainSelect()" id="train">
+				{% for train in config['trains'] %}
+				<option value='{{loop.index0}}'>{{train['name']}}</option>
+				{% endfor %}
+			    </select>
+			</div>
+		    </div>
+		    <div class="column">
+			<div class="container">
+			    <h3>{{ config['abatment-label'] }}</h3>
+			</div>
+			<div class="container">
+			    <select onchange="abatmentSelect()" id="abatment" name="abatment">
+				{% for abatment in config['abatments'] %}
+				<option value='{{loop.index0}}'>{{abatment['name']}}</option>
+				{% endfor %}
+			    </select>
+			</div>
+		    </div>
+		    <div class="column">
+			<div class="container">
+			    <h3>{{ config['distance-label'] }}</h3>
+			</div>	
+			<div class="container">
+			    <select onchange="distanceSelect()" id="distance" name="distance">
+				{% for distance in config['distances'] %}
+				<option id='distans-{{loop.index0}}' value='{{loop.index0}}'>{{distance}}</option>
+				{% endfor %}
+			    </select>
+			</div>
+		    </div>
+		    <div class="column">
+			<div class="container">
+			    <h3>{{ config['height-label'] }}</h3>
+			</div>	
+			<div class="container">
+			    <select onchange="heightSelect()" id="height" name="height">
+				{% for height in config['heights'] %}
+				<option  id='height-{{loop.index0}}' value='{{loop.index0}}'>{{height}}</option>
+				{% endfor %}
+			    </select>
+			</div>
+		    </div>
+
+		</div>
+	    </div>
+	    
+	</div>
+	<div class="column">
+	    <div class="container" >
+		<p id="stat"></p>
+	    </div>
+	</div>
+
+	<script>
+	 var xhttp = new XMLHttpRequest();
+	 var xhttp1 = new XMLHttpRequest();
+	 var xhttp2 = new XMLHttpRequest();
+	 var video = document.getElementById("video");
+	 var mp4 = document.getElementById("mp4");
+	 var audio = document.getElementById("audio");
+	 var wav = document.getElementById("wav");
+	 var stat = document.getElementById("stat");
+	 var abatment = document.getElementById("abatment");
+	 var train = document.getElementById("train");
+	 var distance = document.getElementById("distance");
+	 var height = document.getElementById("height");
+	 
+	 document.addEventListener("DOMContentLoaded", function(event) {
+             console.log("DOM fully loaded and parsed");
+             console.log("Page is Loaded!");
+             abatmentSelect();
+             trainSelect();
+	 }, true);
+	 
+	 handleSize();
+	 
+	 video.addEventListener("ended", function( ){ video.play(); audio.currentTime = 0; audio.play();  }, true);
+	 video.addEventListener("pause", function( ){ audio.pause();  }, true);
+
+	 function handleSize(){
+	     var w = window.innerWidth;
+	     var h = window.innerHeight;
+	     //stat.innerHTML = "Loaded! w: " + w + " h: " + h;
+	 }
+	 function whenLoaded( ){
+             //stat.innerHTML = "Loaded!";
+	 }
+	 function play() {
+             audio.currentTime = video.currentTime;
+             video.play();
+             audio.play();
+	 }
+	 function pause() {
+             video.pause();
+             audio.pause();
+	 }
+	 function rewind() {
+             video.currentTime = 0;
+             audio.currentTime = 0;
+             //xhttp.open("GET", "/rewind", true);
+             //xhttp.send();
+	 }
+	 function reload() {
+             video.load();
+             audio.load();
+	 }
+	 function activateOptions(opt) {
+	     console.log(opt);
+	     for (i=0; i < distance.options.length; i++) {
+		 distance.options[i].disabled = true;
+	     }
+	     for (i=0; i < opt[0].length; i++) {
+		 distance.options[i].disabled = false;
+	     }
+
+	     for (i=0; i < height.options.length; i++) {
+		 height.options[i].disabled = true;
+	     }
+	     for (i=0; i < opt[1].length; i++) {
+		 height.options[i].disabled = false;
+	     }
+	     distance.selectedIndex = opt[2];
+	     height.selectedIndex = opt[3];
+	     
+	 }
+	 function abatmentSelect(){
+             xhttp1.onreadystatechange = function() {
+		 if (this.readyState == 4 && this.status == 200) {
+                     console.log(this.responseText);
+                     var obj = JSON.parse(this.responseText);
+                     wav.src = obj['audio']
+                     audio.load();
+		     abat = obj['abatment'];
+		     console.log(abat);
+		     console.log(abat['description']['heading0']);
+		     document.getElementById("abat-heading0").textContent=abat['description']['heading0'];
+		     document.getElementById("abat-heading1").textContent=abat['description']['heading1'];
+		     document.getElementById("abat-text1").textContent=abat['description']['text1'];
+		     document.getElementById("abat-heading2").textContent=abat['description']['heading2'];
+		     document.getElementById("abat-text2").textContent=abat['description']['text2'];
+		     document.getElementById("abat-heading3").textContent=abat['description']['heading3'];
+		     document.getElementById("abat-text3").textContent=abat['description']['text3'];
+
+		     opt = obj['options'];
+		     activateOptions(opt);
+
+		 }
+             };
+	     xhttp1.open("GET", "/abatment?index=" + abatment.value, true);
+	     xhttp1.send();
+	 }
+	 function trainSelect(){
+	     train.value;
+	     xhttp2.onreadystatechange = function() {
+		 if (this.readyState == 4 && this.status == 200) {
+		     console.log(this.responseText);
+		     var obj = JSON.parse(this.responseText);
+		     mp4.src = obj['video'];
+		     video.load();
+		     wav.src = obj['audio']
+		     audio.load();
+		     opt = obj['options'];
+		     activateOptions(opt);
+		 }
+	     };
+	     xhttp2.open("GET", "/train?index=" + train.value, true);
+	     xhttp2.send();
+	 }
+	 function distanceSelect(){
+	     xhttp1.onreadystatechange = function() {
+		 if (this.readyState == 4 && this.status == 200) {
+		     console.log(this.responseText);
+		     var obj = JSON.parse(this.responseText);
+		     wav.src = obj['audio']
+		     audio.load();
+		 }
+	     };
+	     xhttp1.open("GET", "/distance?index=" + distance.value, true);
+	     xhttp1.send();
+	 }
+	 function heightSelect(){
+	     xhttp1.onreadystatechange = function() {
+		 if (this.readyState == 4 && this.status == 200) {
+		     console.log(this.responseText);
+		     var obj = JSON.parse(this.responseText);
+		     wav.src = obj['audio']
+		     audio.load();
+		 }
+	     };
+	     xhttp1.open("GET", "/height?index=" + height.value, true);
+	     xhttp1.send();
+	 }
+
+	</script>
+    </body>
+</html>

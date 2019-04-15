@@ -1,0 +1,182 @@
+{
+  "train-label": "Tåg",
+  "trains": [
+    {
+      "id": "X2",
+      "name": "X2000",
+      "video": "X2000_passby.mp4"
+    },
+    {
+      "id": "Regina",
+      "name": "Regina",
+      "video": "regina_passby.mp4"
+    },
+    {
+      "id": "Cargo",
+      "name": "Godståg",
+      "video": "cargo_passby.mp4"
+    },
+    {
+      "id": "Regina_start_stop",
+      "name": "Regina med start och stopp",
+      "video": "regina_start_stop.mp4"
+    },
+    {
+      "id": "Exclamation",
+      "name": "Utrop",
+      "video": ""
+    }
+  ],
+  "abatment-label": "Åtgärd",
+  "abatment_info": {
+    "no_abat":
+    {
+      
+      "name": "Ingen åtgärd",
+      "image": "",
+      "description": {
+	"heading0" : "Ingen åtgärd"
+      },
+      "cost": 30,
+      "saving": 20
+    },
+    "barrier-close":
+    {
+      "image": "",
+      "description": {
+	"heading0" : "Bullerskärmar- spårnära",
+	"heading1" : "Typ av investering:",
+	"text1"    : "Den spårnära bullerskärmen är en låg skärm som placeras nära banan. Beroende av dess placering görs investeringen av banägare eller eventuellt markägare.  En låg skärm placerad vid banvallen medför vissa extra kostnader kopplat till underhåll.",
+	"heading2" : "Åtgärdsbeskrivning:",
+	"text2"    : "En låg bullerskärm skyddar mot buller bakom skärmen. Ju närmare bullerkällan den kan monteras desto lägre bullerskärm behövs för att vara effektiv. På längre avstånd krävs höga skärmar. Skärmen bör vara absorberande eller vinklad för att undvika oönskade reflexer. Insättningsdämpning förväntas ligga mellan 5-10 dB.",
+	"heading3" : "Typer av låga bullerskärmar:",
+	"text3"    : "Det finns både hårda och mjuka låga skärmar. Hårda skärmar utgörs av betong och mjuka skärmar utgörs av absorberande material fäst på utsidan av skärmen."
+      },
+      "cost": 30,
+      "saving": 20
+    },
+    "tall_barr":
+    {
+      "image": "",
+      "description": {
+	"heading0" : "Bullerskärmar- höga",
+	"heading1" : "Typ av investering:",
+	"text1"    : "De höga bullerskärmarna placeras längre ifrån banan och investeringen kan göras av markägare med eller utan samfinansiering med banägaren.",
+	"heading2" : "Åtgärdsbeskrivning:",
+	"text2"    : "Höga bullerskärmar skyddar mot buller bakom skärmen. Höjden på skärmen bestäms av hur nära bullerkällan den kan placeras. Ju längre ifrån desto högre skärm behövs. Insättningsdämpning förväntas ligga mellan 5-10 dB.",
+	"heading3" : "Typer av låga bullerskärmar:",
+	"text3"    : "Höga skärmar utgörs av olika material men gemensamt har de alla i att de är hårda skärmar. Materialet varierar mellan trä, glas, plast och betong. Både hårda och mjuka låga skärmar. Hårda skärmar utgörs av betong och mjuka skärmar utgörs av absorberande material fäst på utsidan av skärmen. I dessa exempel har beräkningar gjorts med hög skärm ( 4 meter över mark)."
+      },
+      "cost": 30,
+      "saving": 20
+    },
+    "rail_damper":
+    {
+      "image": "",
+      "description": {
+	"heading0" : "Rälsdämpare",
+	"heading1" : "Typ av investering:",
+	"text1"    : "Räldämpare är en åtgärd direkt på banan och investeringen görs av Trafikverket alternativt av lokal banägare.",
+	"heading2" : "Åtgärdsbeskrivning:",
+	"text2"    : "En räldämpare är ett passivt element som är fixerad på båda sidor av rälsen och reducerar luftburet ljud som orsakas av den vibrerande rälsen. Räldämpare installeras vanligtvis mellan varje rälslänk i problemområden. Under ideala förhållanden skulle räldämpare kunna ge ca 4 dB bullerreduktion. I praktiken blir effekten mindre då åtgärden inte påverkar ljudet som strålar från hjulen."
+      },
+      "cost": 30,
+      "saving": 20
+    },
+    "wheel_damper":
+    {
+      "image": "",
+      "description": {
+	"heading0" : "Hjuldämpare",
+	"heading1" : "Typ av investering:",
+	"text1"    : "Hjuldämpare är en åtgärd som görs av fordonsägare.",
+	"heading2" : "Åtgärdsbeskrivning:",
+	"text2"    : "Bullret som strålar från hjulen kan dämpas med hjuldämpare. Dock finns få kommersiella lösningar tillgängliga. Under ideala förhållanden skulle hjuldämpare kunna ge ca 4 dB bullerreduktion, men i praktiken blir effekten mindre då åtgärden inte påverkar ljudet som strålar från rälsen."
+      },
+      "image": "",
+      "cost": 30,
+      "saving": 20
+    },
+    "combined_abatments":
+    {
+      "image": "",
+      "description": {
+	"heading0" : "Sammansatta åtgärder",
+	"text1": "Välj en enskild åtgärd för att se information om åtgärderna."
+      },
+      "cost": 30,
+      "saving": 20
+    }
+  },
+  "abatments": [
+    {
+      "name": "Ingen",
+      "id": "no_abat",
+      "type": "no_abat"
+    },
+    {
+      "name": "Låg mjuk spårnära bullerskärm, 30cm",
+      "id": "soft_top_30_cm",
+      "type": "barrier-close"
+    },
+    {
+      "name": "Låg mjuk spårnära bullerskärm, 60cm",
+      "id": "soft_top_60_cm",
+      "type": "barrier-close"
+    },
+    {
+      "name": "Låg mjuk spårnära bullerskärm, 120cm",
+      "id": "soft_top_120_cm",
+      "type": "barrier-close"
+    },
+    {
+      "name": "Låg hård spårnära bullerskärm, 30cm",
+      "id": "low_barr_30_cm",
+      "type": "barrier-close"
+    },
+    {
+      "name": "Låg ändlig bullerskärm",
+      "id": "low_finite_barr_5m",
+      "type":  "barrier-close"
+    },
+
+    {
+      "name": "Hög hård bullerskärm",
+      "id": "tall_barr",
+      "type": "tall_barr"
+    },
+    {
+      "name": "Hjuldämpare",
+      "id": "wheel_damper",
+      "type": "wheel_damper"
+    },
+    {
+      "name": "Rälsdämpare",
+      "id": "rail_damper",
+      "type": "rail_damper"
+    },
+    {
+      "name": "Hjuldämpare och rälsdämpare",
+      "id": "both_dampers",
+      "type": "combined_abatments"
+    },
+    {
+      "name": "Hjul, rälsdämpare och låg bullerskärm",
+      "id": "both_dampers_and_low_barr",
+      "type": "combined_abatments"
+    } 
+  ],
+    "distance-label": "Avstånd",
+    "distances": [
+      7.5,
+      30,
+      50
+    ],
+    "height-label": "Höjd",
+    "heights": [
+      "Våningsplan 1, 1.2m",
+      "Våningsplan 2, 4m",
+      "Våningsplan 3, 7m",
+      "Våningsplan 4, 10m"
+    ]
+  }
