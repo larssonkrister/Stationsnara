@@ -21,9 +21,10 @@ from flask import Flask, request, make_response, render_template
 __version__ = '0.1.0'
 
 app_dir = os.path.dirname(os.path.realpath(__file__))
+media_dir =  os.path.join('static', 'media')
 
-img_dir = 'static/media/img/'
-snd_dir = 'static/media/audio/'
+img_dir = os.path.join('static', 'media' 'img')
+snd_dir = os.path.normpath('static/media/audio/')
 video_dir = 'static/media/video/'
 
 verbose = False
