@@ -95,7 +95,7 @@ class SNS(object):
         for train in self.train_types:
             abat = set([t['abat'] for t in trains[train]])
             tam = {}
-            for t in trains['Regina']:
+            for t in trains[train]:
                 i = {'dist': float(t['dist']),
                      'height': float(t['height']),
                      'img': t['img'],
