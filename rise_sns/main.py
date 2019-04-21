@@ -17,6 +17,11 @@ import random
 import flask
 from flask import Flask, request, make_response, render_template
 
+if 'Windows' in platform.system():
+    import win32com.client
+    import pythoncom
+    start_prog_dir = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs'
+
 __version__ = '0.1.0'
 
 app_dir = os.path.dirname(os.path.realpath(__file__))
@@ -151,7 +156,6 @@ class SNS(object):
         abats = [ a['id'] for a in self.config['abatments']]
         l = []
         for i,a in enumerate(abats):
-            print(a, train_abats)
             if a in train_abats:
                 l.append(i)
         return l
@@ -287,25 +291,35 @@ def versions():
 
 def find_program(name):
     name_ = name.lower()
+    if 'Windows' in platform.system():
+        for d in os.listdir(os.path.abspath(start_prog_dir)):
+            if name_ in d.lower():
+                cmd = os.path.join(start_prog_dir,d)
+                shell = win32com.client.Dispatch("WScript.Shell")
+                shortcut = shell.CreateShortCut(cmd)
+                return shortcut.Targetpath
+        
     for d in os.get_exec_path():
-        for prog in os.listdir(d):
-            if name_ in prog.lower():
-                return os.path.join(os.path.abspath(d), prog)
-    raise Exception('Program not found: {}'.format(name))
-            
-def execute_program(name, *args):
-    cmd = [find_program(name)]
-    cmd.extend(args)
-    subprocess.call(cmd)
-    
+        if os.path.isdir(d):
+            print(d)
+            for prog in os.listdir(d):
+                if name_ in prog.lower():
+                    return os.path.join(os.path.abspath(d), prog)
+
 def start_browser(*args):
+    pythoncom.CoInitialize()
     b = None
     s = platform.system()
     if 'Linux' in s:
         b = 'chromium'
-    if b is None:
-        raise Exception('Browser not defined for this system!')
-    execute_program(b, *args)
+    elif 'Windows' in s:
+        b = 'chrome'
+    prog = find_program(b)
+    if prog is None:
+        raise Exception('Browser (Chrome) not fined for this system!\n install Google Chrome an try again!')
+    cmd = [prog]
+    cmd.extend(args)
+    subprocess.call(cmd)
     
 if __name__ == "__main__":
 
