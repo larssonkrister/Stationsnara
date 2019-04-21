@@ -64,7 +64,7 @@
 			<div class="container">
 			    <select onchange="abatmentSelect()" id="abatment" name="abatment">
 				{% for abatment in config['abatments'] %}
-				<option value='{{loop.index0}}'>{{abatment['name']}}</option>
+				<option id='abatment-{{loop.index0}}' value='{{loop.index0}}'>{{abatment['name']}}</option>
 				{% endfor %}
 			    </select>
 			</div>
@@ -117,6 +117,7 @@
 	 var train = document.getElementById("train");
 	 var distance = document.getElementById("distance");
 	 var height = document.getElementById("height");
+	 var playing = false;
 	 
 	 document.addEventListener("DOMContentLoaded", function(event) {
              console.log("DOM fully loaded and parsed");
@@ -139,11 +140,21 @@
              //stat.innerHTML = "Loaded!";
 	 }
 	 function play() {
+	     playing = true
              audio.currentTime = video.currentTime;
              video.play();
              audio.play();
 	 }
+	 function loadAudio(clip) {
+	     wav.src = clip;
+	     audio.load();
+	     audio.currentTime = video.currentTime;
+	     if (playing) {
+		 audio.play();
+	     }
+	 }
 	 function pause() {
+	     playing = false
              video.pause();
              audio.pause();
 	 }
@@ -162,32 +173,34 @@
 	 }
 	 function activateOptions(opt) {
 	     console.log(opt);
+	     for (i=0; i < abatment.options.length; i++) {
+		 abatment.options[i].disabled = true;
+	     }
+	     for (i=0; i < opt[0].length; i++) {
+		 abatment.options[opt[0][i]].disabled = false;
+	     }
 	     for (i=0; i < distance.options.length; i++) {
 		 distance.options[i].disabled = true;
 	     }
-	     for (i=0; i < opt[0].length; i++) {
-		 distance.options[i].disabled = false;
+	     for (i=0; i < opt[1].length; i++) {
+		 distance.options[opt[1][i]].disabled = false;
 	     }
-
 	     for (i=0; i < height.options.length; i++) {
 		 height.options[i].disabled = true;
 	     }
-	     for (i=0; i < opt[1].length; i++) {
-		 height.options[i].disabled = false;
+	     for (i=0; i < opt[2].length; i++) {
+		 height.options[opt[2][i]].disabled = false;
 	     }
-	     distance.selectedIndex = opt[2];
-	     height.selectedIndex = opt[3];
-	     
+	     abatment.selectedIndex = opt[3];
+	     distance.selectedIndex = opt[4];
+	     height.selectedIndex = opt[5];
 	 }
 	 function abatmentSelect(){
              xhttp1.onreadystatechange = function() {
 		 if (this.readyState == 4 && this.status == 200) {
                      console.log(this.responseText);
                      var obj = JSON.parse(this.responseText);
-                     wav.src = obj['audio']
-                     audio.load();
-		     audio.play();
-		     sync_audio();
+		     loadAudio(obj['audio'])
 		     abat = obj['abatment'];
 		     console.log(abat);
 		     console.log(abat['description']['heading0']);
@@ -207,14 +220,14 @@
 	 }
 	 function trainSelect(){
 	     train.value;
+	     pause();
 	     xhttp2.onreadystatechange = function() {
 		 if (this.readyState == 4 && this.status == 200) {
 		     console.log(this.responseText);
 		     var obj = JSON.parse(this.responseText);
 		     mp4.src = obj['video'];
 		     video.load();
-		     wav.src = obj['audio']
-		     audio.load();
+		     loadAudio(obj['audio']);
 		     opt = obj['options'];
 		     activateOptions(opt);
 		 }
@@ -227,11 +240,7 @@
 		 if (this.readyState == 4 && this.status == 200) {
 		     console.log(this.responseText);
 		     var obj = JSON.parse(this.responseText);
-		     wav.src = obj['audio']
-		     audio.load();
-		     audio.play();
-		     sync_audio();
-		     //rewind();
+		     loadAudio(obj['audio']);
 		 }
 	     };
 	     xhttp1.open("GET", "/distance?index=" + distance.value, true);
@@ -242,11 +251,7 @@
 		 if (this.readyState == 4 && this.status == 200) {
 		     console.log(this.responseText);
 		     var obj = JSON.parse(this.responseText);
-		     wav.src = obj['audio']
-		     audio.load();
-		     audio.play();
-		     sync_audio();
-		     //rewind();
+		     audioLoad(obj['audio']);
 		 }
 	     };
 	     xhttp1.open("GET", "/height?index=" + height.value, true);

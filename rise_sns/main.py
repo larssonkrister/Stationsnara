@@ -118,9 +118,10 @@ class SNS(object):
         for f in os.listdir(os.path.join(app_dir, video_dir)):
             fn, fext = os.path.splitext(f)
             for t in self.train_types:
-                if not fn.endswith('start_stop') and t.lower() in fn.lower():
+                t_ = t + '_'
+                if t.lower() in fn.lower():
                     self.train_video[t] = f
-                    
+
     def train_id(self):
         return self.config['trains'][self.train_idx]['id']
     
@@ -130,7 +131,10 @@ class SNS(object):
     def find_item(self, train, abatment, dist, height):
         if verbose:
             print('SNS.find_item(train: {} abatment: {}, dist: {} height: {})'.format(train, abatment, dist, height))
-        r = [i for i in self.train_data[train][abatment] if i['dist'] == dist and i['height'] == height]
+        if abatment in self.train_data[train]:
+            r = [i for i in self.train_data[train][abatment] if i['dist'] == dist and i['height'] == height]
+        else:
+            r = self.train_data[train]['no_abat']
         if len(r) > 0:
             r = r[0] 
         else: 
@@ -142,28 +146,33 @@ class SNS(object):
     def get_abatments(self, train):
         return [i for i in self.train_data[train]]
 
+    def train_abatments_options(self, train_id):
+        train_abats = list(self.train_data[train_id].keys())
+        abats = [ a['id'] for a in self.config['abatments']]
+        l = []
+        for i,a in enumerate(abats):
+            print(a, train_abats)
+            if a in train_abats:
+                l.append(i)
+        return l
+
     def video_file(self, train_id, abatment, distance=30, height=0):
         return self.train_video[train_id]
-        
-    def audio_file(train, abatment, distance_idx=0, height_idx=0):
-        dist = self.distances[distance_idx]  
-        height = self.heights[height_idx] 
-        c = list(filter(lambda i: i['dist'] == dist, train_data[train][abatment]))
-        
-        return os.path.join('/' + snd_dir , train_data[train]['audio'])
         
     def responce_data(self, abatment_info=False):
         if verbose:
             print('SNS.responce_data(train_idx: {} abat_idx dist: {} height: {})'
                   .format(self.train_idx, self.abatment_idx, self.distance_idx, self.height_idx))
-            
+
         train = self.train_id()
         abatment = self.abatment_id()
         options = self.dig_out_options()
+        
+        
         # quick fix, if only one distance (and height) is avalable change the selection
         if len(options[0]) == 1:
-            self.distance_idx = options[2]
-            self.height_idx = options[3]
+            self.distance_idx = options[4]
+            self.height_idx = options[5]
 
         distance = self.distances[self.distance_idx]  
         #distance = self.config['distances'][self.distance_idx]  
@@ -196,17 +205,29 @@ class SNS(object):
         This is a quick fix, it assumes that all combination of distance and height is
         avalable or only one of each.
         """
-        opts = self.train_data[self.train_id()][self.abatment_id()]
+        tdata = self.train_data[self.train_id()]
+        opts = tdata.get(self.abatment_id(),[])
         if len(opts) > 1:
-            dists = ['distance-{}'.format(i) for i in range(len(self.config['distances']))]
-            heights = ['height-{}'.format(i) for i in range(len(self.config['heights']))]
+            dists = [i for i in range(len(self.config['distances']))]
+            heights = [i for i in range(len(self.config['heights']))]
         else:
-            dists = ['distance-0']
-            heights = ['height-0']
+            self.distance_idx = 0
+            self.height_idx = 0
+            dists = [0]
+            heights = [0]
+        dists_selection = 0
+        heights_selection = 0
         
+        abats = self.train_abatments_options(self.train_id())
+        abats_selection = self.abatment_idx
+        if not abats_selection in abats:
+            self.abatment_idx = abats[0]
+            abats_selection = abats[0]
+        opt = (abats, dists, heights, abats_selection, dists_selection, heights_selection)
         if debug:
-            print('dig_out_options -> {}'.format((dists, heights)))
-        return (dists, heights, 0, 0)
+            print('dig_out_options abatment_idx: {}'.format(self.abatment_idx))
+            print('dig_out_options -> {}'.format(opt))
+        return opt
 
 @app.route('/')
 def main_page():
