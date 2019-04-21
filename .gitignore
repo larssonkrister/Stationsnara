@@ -4,3 +4,7 @@
 dist/
 media/
 
+
+rise_sns/\.ipynb_checkpoints/
+
+*.ipynb

@@ -12,7 +12,7 @@ import json
 import os
 import re
 import threading
-import webbrowser
+import subprocess
 import random
 import flask
 from flask import Flask, request, make_response, render_template
@@ -264,6 +264,28 @@ def versions():
                     ))
     return s
 
+def find_program(name):
+    name_ = name.lower()
+    for d in os.get_exec_path():
+        for prog in os.listdir(d):
+            if name_ in prog.lower():
+                return os.path.join(os.path.abspath(d), prog)
+    raise Exception('Program not found: {}'.format(name))
+            
+def execute_program(name, *args):
+    cmd = [find_program(name)]
+    cmd.extend(args)
+    subprocess.call(cmd)
+    
+def start_browser(*args):
+    b = None
+    s = platform.system()
+    if 'Linux' in s:
+        b = 'chromium'
+    if b is None:
+        raise Exception('Browser not defined for this system!')
+    execute_program(b, *args)
+    
 if __name__ == "__main__":
 
     def int_or_str(text):
@@ -286,19 +308,15 @@ if __name__ == "__main__":
     if not debug:
         verbose = args.verbose
 
-        
     if verbose: print('Restart_________________________________________________________________________')    
     if verbose: print('Python version: {}'.format(platform.python_version()))
     if verbose: print('Flask version: {}'.format(flask.__version__))
     sns = SNS()
     if verbose: print('config.json:\n', sns.config)
 
-    
-
-    port = 5000 + random.randint(0, 999)
+    port = 5000
     url = "http://127.0.0.1:{0}".format(port)
 
-    threading.Timer(1.25, lambda: webbrowser.get('windows-default').open(url) ).start()
+    threading.Timer(1.25, lambda: start_browser(url) ).start()
 
     app.run(host='127.0.0.1', port=port, debug=debug)
-

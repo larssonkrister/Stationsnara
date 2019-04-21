@@ -2,149 +2,8 @@
 <html lang="en">
     <head>
 	<title></title>
-	<!-- <meta content=""/>-->
 	<meta charset="UTF-8"/>
-	<style>
-	 select {
-             padding: 8px 16px;
-             margin: 0px 0px;
-             font-size: 16px;
-	 }
-	 .main {
-             display: flex;
-             justify-content: center;
-             background-color: Blue;
-	     flex-direction: column;
-             margin: 0px;
-	     font-size: 16px;
-	 }
-	 .top {
-             display: flex;
-	     flex: 30%;
-             justify-content: center;
-             background-color: DarkGray;
-	     flex-direction: row;
-             margin: 0px;
-	 }
-	 .left {
-             display: flex;
-	     flex: 30%;
-             justify-content: center;
-             background-color: White;
-	     flex-direction: row;
-             margin: 0px;
-	 }
-	 .center {
-             display: flex;
-	     flex: 30%;
-             justify-content: top;
-             background-color: DarkGray;
-	     flex-direction: row;
-             margin: 20px;
-	 }
-	 .right {
-             display: flex;
-	     flex: 30%;
-             justify-content: top;
-             background-color: White;
-	     flex-direction: column;
-             margin: 0px;
-	     padding: 20px;
-	     align-items: stretch;
-	     align-content: flex-start;
-	 }    
-	 .map {
-             display: flex;
-	     flex: 60%;
-             justify-content: center;
-             background-color: white;
-	     flex-direction: row;
-             margin: 10px;
-	 }
-	 .media {
-             display: flex;
-	     flex: 40%;
-             justify-content: top;
-             background-color: DarkGray;
-	     flex-direction: row;
-             margin: 40px;
-	 }
-	 .abatment {
-             display: flex;
-	     flex: 60%;
-             justify-content: top;
-             background-color: White;
-	     flex-direction: column;
-	     align-items: stretch;
-	     align-content: flex-start;
-	 }
-	 .buttons {
-             display: flex;
-             justify-content: center;
-	     flex-direction: row;
-             margin: 20px;
-	     align-items: stretch;
-	     align-content: flex-end;
-	 }
-	 .bottom {
-             display: flex;
-             justify-content: center;
-             background-color: White;
-	     flex-direction: row;
-	     font-size: 6px;
-	     padding: 20px;
-	     margin: 0px;
-	     align-items: stretch;
-	     align-content: flex-end;
-	 }
-	 .value {
-             display: flex;
-             justify-content: left;
-             background-color: White;
-	     flex-direction: column;
-             margin: 10px;
-	     align-items: stretch;
-	     align-content: flex-end;
-	 }
-	 .flex-container {
-             display: flex;
-             justify-content: center;
-             background-color: DarkGray;
-             margin: 10px;
-
-	 }
-	 .container {
-             display: flex;
-             justify-content: right;
-             background-color: White;
-             align-content: space-between;
-             font-size: 20px;
-	 }
-	 .column {
-             display: flex;
-             justify-content: center;
-             flex-direction: column;
-	     padding: 10px;
-	 }
-	 .column-grey {
-             display: flex;
-             justify-content: center;
-             flex-direction: column;
-             background-color: DarkGray;
-	 }
-	 h1 {
-	     font-family: Arial;
-	     font-size: 24px;
-	 }
-	 h2 {
-	     font-family: Arial;
-	     font-size: 20px;
-	 }
-	 h3 {
-	     font-family: Arial;
-	     font-size: 16px;
-	 }
-	</style>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
 	<div class="main">
@@ -153,7 +12,6 @@
 		</div>
 		<div class="centre">
 		    <div class="media">
-			<!--Autoplay only works in Chromium if the video is muted-->
 			<!-- <video id="video" width="640" height="480" muted>-->
 			<video id="video" width="640" height="480" muted mediagroup="train">
 			    <source id="mp4" type="video/mp4" />
@@ -335,10 +193,9 @@
 		     document.getElementById("abat-text2").textContent=abat['description']['text2'];
 		     document.getElementById("abat-heading3").textContent=abat['description']['heading3'];
 		     document.getElementById("abat-text3").textContent=abat['description']['text3'];
-
 		     opt = obj['options'];
 		     activateOptions(opt);
-
+		     rewind();
 		 }
              };
 	     xhttp1.open("GET", "/abatment?index=" + abatment.value, true);
@@ -385,7 +242,6 @@
 	     xhttp1.open("GET", "/height?index=" + height.value, true);
 	     xhttp1.send();
 	 }
-
 	</script>
     </body>
 </html>
