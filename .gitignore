@@ -4,6 +4,7 @@
 *.egg-info
 *~
 dist/
+build/
 media/
 
 
@@ -12,3 +13,11 @@ rise_sns/\.ipynb_checkpoints/
 *.ipynb
 
 rise_sns/debug_info\.json
+
+\.spec
+
+rise_sns/\.\.spec
+
+rise_sns/__pycache__/
+
+*.spec
