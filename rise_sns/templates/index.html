@@ -153,6 +153,9 @@
              //xhttp.open("GET", "/rewind", true);
              //xhttp.send();
 	 }
+	 function sync_audio() {
+             audio.currentTime = video.currentTime;
+	 }
 	 function reload() {
              video.load();
              audio.load();
@@ -183,6 +186,8 @@
                      var obj = JSON.parse(this.responseText);
                      wav.src = obj['audio']
                      audio.load();
+		     audio.play();
+		     sync_audio();
 		     abat = obj['abatment'];
 		     console.log(abat);
 		     console.log(abat['description']['heading0']);
@@ -195,7 +200,6 @@
 		     document.getElementById("abat-text3").textContent=abat['description']['text3'];
 		     opt = obj['options'];
 		     activateOptions(opt);
-		     rewind();
 		 }
              };
 	     xhttp1.open("GET", "/abatment?index=" + abatment.value, true);
@@ -225,6 +229,9 @@
 		     var obj = JSON.parse(this.responseText);
 		     wav.src = obj['audio']
 		     audio.load();
+		     audio.play();
+		     sync_audio();
+		     //rewind();
 		 }
 	     };
 	     xhttp1.open("GET", "/distance?index=" + distance.value, true);
@@ -237,6 +244,9 @@
 		     var obj = JSON.parse(this.responseText);
 		     wav.src = obj['audio']
 		     audio.load();
+		     audio.play();
+		     sync_audio();
+		     //rewind();
 		 }
 	     };
 	     xhttp1.open("GET", "/height?index=" + height.value, true);

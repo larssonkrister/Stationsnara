@@ -8,3 +8,5 @@ media/
 rise_sns/\.ipynb_checkpoints/
 
 *.ipynb
+
+rise_sns/debug_info\.json
