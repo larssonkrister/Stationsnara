@@ -20,11 +20,6 @@
       "id": "ReginaStartStop",
       "name": "Regina med start och stopp",
       "video": "regina_start_stop.mp4"
-    },
-    {
-      "id": "Exclamation",
-      "name": "Utrop",
-      "video": ""
     }
   ],
   "abatment-label": "Åtgärd",

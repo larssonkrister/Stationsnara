@@ -20,9 +20,15 @@ from flask import Flask, request, make_response, render_template
 if 'Windows' in platform.system():
     import win32com.client
     import pythoncom
-    start_prog_dir = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs'
+    sys_start = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs'
+    home = 'C:\ProgramData\Microsoft\Windows\Start Menu Places\Personal Folder'
+    user_start = os.path.join(home, 'AppData', 'Roaming', 'Microsoft', 
+                              'Windows', 'Start Menu', 'Programs')
+    start_dirs = [sys_start, user_start]
+    prog_dirs = ['C:\Program Files\Google\Chrome\Application\chrome.exe',
+                 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe']
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 app_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -39,8 +45,8 @@ sns = None
 class SNS(object):
     
     def __init__(self):
-        self.scan_audio_files()
         self.load_configuration()
+        self.scan_audio_files()
         self.audio_ext = '.mp3' # or '.ogg'
         self.train_idx = 0
         self.abatment_idx = 0
@@ -120,12 +126,8 @@ class SNS(object):
                 json.dump(self.train_data, f)
             
         self.train_video = {}
-        for f in os.listdir(os.path.join(app_dir, video_dir)):
-            fn, fext = os.path.splitext(f)
-            for t in self.train_types:
-                t_ = t + '_'
-                if t.lower() in fn.lower():
-                    self.train_video[t] = f
+        for train in self.config['trains']:
+            self.train_video[train['id']] = train['video']
 
     def train_id(self):
         return self.config['trains'][self.train_idx]['id']
@@ -292,13 +294,17 @@ def versions():
 def find_program(name):
     name_ = name.lower()
     if 'Windows' in platform.system():
-        for d in os.listdir(os.path.abspath(start_prog_dir)):
-            if name_ in d.lower():
-                cmd = os.path.join(start_prog_dir,d)
-                shell = win32com.client.Dispatch("WScript.Shell")
-                shortcut = shell.CreateShortCut(cmd)
-                return shortcut.Targetpath
-        
+        for prog in prog_dirs:
+            if os.path.exists(prog):
+                return prog
+        for start_dir in start_dirs:
+            for d in os.listdir(start_dir):
+                if name_ in d.lower():
+                    cmd = os.path.join(start_dir,d)
+                    shell = win32com.client.Dispatch("WScript.Shell")
+                    shortcut = shell.CreateShortCut(cmd)
+                    return shortcut.Targetpath
+
     for d in os.get_exec_path():
         if os.path.isdir(d):
             print(d)
