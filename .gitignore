@@ -14,6 +14,7 @@ rise_sns/\.ipynb_checkpoints/
 
 rise_sns/debug_info\.json
 
+<<<<<<< Updated upstream
 \.spec
 
 rise_sns/\.\.spec
@@ -21,3 +22,6 @@ rise_sns/\.\.spec
 rise_sns/__pycache__/
 
 *.spec
+=======
+*.zip
+>>>>>>> Stashed changes
