@@ -1,4 +1,4 @@
-"""Stationsnära samhällen, webserver that implements a demonstrator.
+"""God ljudmiljö i stationsnära samhällen, webserver that implements a demonstrator.
 
 This version is browser only where the web browser plays the videos
 as well as the sounds. 
@@ -248,6 +248,27 @@ def main_page():
     #response.headers["Expires"] = "0" # Proxies.
     return response
 
+@app.route('/info1')
+def info_page():
+    if debug:
+        print('/info1__________________________________________________________________________')
+    response = make_response(flask.render_template('info1.html',config=sns.config))
+    return response
+
+@app.route('/info2')
+def info2_page():
+    if debug:
+        print('/info2__________________________________________________________________________')
+    response = make_response(flask.render_template('info2.html',config=sns.config))
+    return response
+
+@app.route('/nytta')
+def nytta_page():
+    if debug:
+        print('/nytta__________________________________________________________________________')
+    response = make_response(flask.render_template('nytta.html',config=sns.config))
+    return response
+
 @app.route('/train',methods=['GET', 'POST'] )
 def train_select():
     if debug:
@@ -307,13 +328,13 @@ def find_program(name):
 
     for d in os.get_exec_path():
         if os.path.isdir(d):
-            print(d)
             for prog in os.listdir(d):
                 if name_ in prog.lower():
                     return os.path.join(os.path.abspath(d), prog)
 
 def start_browser(*args):
-    pythoncom.CoInitialize()
+    if 'Windows' in platform.system():
+        pythoncom.CoInitialize()
     b = None
     s = platform.system()
     if 'Linux' in s:

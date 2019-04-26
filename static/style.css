@@ -6,7 +6,8 @@ select {
 .main {
     display: flex;
     justify-content: center;
-    background-color: Blue;
+    text-align: center;
+    background-color: White;
     flex-direction: column;
     margin: 0px;
     font-size: 16px;
@@ -15,30 +16,45 @@ select {
     display: flex;
     flex: 30%;
     justify-content: center;
-    background-color: DarkGray;
+    background-color: White;
     flex-direction: row;
     margin: 0px;
 }
 .left {
     display: flex;
     flex: 30%;
-    justify-content: center;
+    justify-content: bottom;
+    text-align: left;
     background-color: White;
-    flex-direction: row;
+    flex-direction: column;
     margin: 0px;
+    padding: 20px;
+    align-items: stretch;
+    align-content: flex-start;
 }
 .center {
     display: flex;
     flex: 30%;
     justify-content: top;
+    text-align: left;
     background-color: DarkGray;
     flex-direction: row;
     margin: 20px;
+}
+.center-white {
+    max-width: 800px;
+    display: flex;
+    justify-content: top;
+    text-align: left;
+    background-color: White;
+    flex-direction: column;
+    margin: 0px;
 }
 .right {
     display: flex;
     flex: 30%;
     justify-content: top;
+    text-align: left;
     background-color: White;
     flex-direction: column;
     margin: 0px;
@@ -50,7 +66,7 @@ select {
     display: flex;
     flex: 60%;
     justify-content: center;
-    background-color: white;
+    background-color: White;
     flex-direction: row;
     margin: 10px;
 }
@@ -71,12 +87,18 @@ select {
     align-items: stretch;
     align-content: flex-start;
 }
+.button {
+    display: flex;
+    justify-content: center;
+    max-width: 100 px;
+    margin: 20px;
+}
 .buttons {
     display: flex;
     justify-content: center;
     flex-direction: row;
     margin: 20px;
-    align-items: stretch;
+    
     align-content: flex-end;
 }
 .bottom {
@@ -119,21 +141,24 @@ select {
     flex-direction: column;
     padding: 10px;
 }
-.column-grey {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background-color: DarkGray;
-}
 h1 {
     font-family: Arial;
     font-size: 24px;
+    margin-bottom: 16px;
 }
 h2 {
     font-family: Arial;
     font-size: 20px;
+    margin-top: 8px;
+    margin-bottom: 4px;
 }
 h3 {
     font-family: Arial;
     font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+p {
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
