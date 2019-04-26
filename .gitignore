@@ -27,3 +27,5 @@ rise_sns/__pycache__/
 >>>>>>> Stashed changes
 
 debug_info\.json
+
+__pycache__/
