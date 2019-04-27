@@ -6,7 +6,9 @@ Demonstratorn kan köras i Windows 10 och kräver att Google Chrome finns instal
 
 För att göra en distribution krävs två steg. Först görs en distribution av pytonprogrmmet. Därefter paketeras distributionen som en Windows installerare.
 
-Ladda ner projektet 
+## Ladda ner projektet
+
+Ladda ner projektet med git ```git clone https://github.com/PLu55/Stationsnara.git``` eller som .zip fil, det finns en knapp på huvudsidan *Clone of download*. Om du laddat ner som .zip fil packa upp den på lämpligt ställe. Gå in i mappen Stationsnara.
 
 ## Skapa python distribution
 
