@@ -4,7 +4,7 @@ Det här är en demonstrator utvecklad i projektet God ljudmiljö i stationssamh
 
 Demonstratorn kan köras i Windows 10 och kräver att Google Chrome finns installerad på datorn.
 
-För att göra en distribution krävs två steg. Först görs en distribution av pytonprogrmmet. Därefter så paketeras distributionen som en Windows installerare.
+För att göra en distribution krävs två steg. Först görs en distribution av pytonprogrmmet. Därefter paketeras distributionen som en Windows installerare.
 
 ## Skapa python distribution
 
