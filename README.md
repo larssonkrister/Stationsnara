@@ -8,12 +8,13 @@ För att göra en distribution krävs två steg. Först görs en distribution av
 
 ## Ladda ner projektet
 
-Ladda ner projektet med git ```git clone https://github.com/PLu55/Stationsnara.git``` eller som .zip fil, det finns en knapp på huvudsidan *Clone of download*. Om du laddat ner som .zip fil packa upp den på lämpligt ställe. Gå in i mappen Stationsnara.
+Ladda ner projektet med git ```git clone https://github.com/PLu55/Stationsnara.git``` eller som .zip fil, det finns en knapp på huvudsidan *Clone of download*. Om du laddat ner som .zip fil packa upp den på lämpligt ställe. 
 
 ## Skapa python distribution
 
-För att kunna skapa en python distribution så krävs att python>=3.6, flask>=1.0.2 och pyinstaller finnns installerad på datorn.  
+För att kunna skapa en python distribution så krävs att python>=3.6, flask>=1.0.2 och pyinstaller finnns installerad på datorn. Förslagsvis kan man installera Python distributionen [miniconda](https://docs.conda.io/en/latest/miniconda.html). Sedan installeras flask genom att köra följande kommand i PowerShell ```conda install flask``` och pyinstaller med ```conda install pyinstaller```
 
+Gå in i projektets mapp Stationsnara.
 Öppna ett PowerShell fönster (finns i file menyn längst uppe till vänster i filbrowsern).
 
 Kör komandot: ```pyinstaller main.py```
