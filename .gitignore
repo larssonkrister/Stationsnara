@@ -5,25 +5,15 @@
 *~
 dist/
 build/
-media/
 
-
-rise_sns/\.ipynb_checkpoints/
+.ipynb_checkpoints
 
 *.ipynb
 
-rise_sns/debug_info\.json
+debug_info.json
 
-<<<<<<< Updated upstream
-\.spec
-
-rise_sns/\.\.spec
-
-rise_sns/__pycache__/
-
+.spec
+__pycache__/
 *.spec
-=======
 *.zip
->>>>>>> Stashed changes
-
 debug_info\.json
