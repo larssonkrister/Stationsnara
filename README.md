@@ -8,7 +8,7 @@ För att göra en distribution krävs två steg. Först görs en distribution av
 
 ## Ladda ner projektet
 
-Ladda ner projektet med git ```git clone https://github.com/PLu55/Stationsnara.git``` eller som .zip fil, det finns en knapp på huvudsidan *Clone or download*. Om du laddat ner som .zip fil packa upp den på lämpligt ställe. 
+Ladda ner projektet med git ```git clone https://github.com/larssonkrister/Stationsnara.git``` eller som .zip fil, det finns en knapp på huvudsidan *Clone or download*. Om du laddat ner som .zip fil packa upp den på lämpligt ställe. 
 
 ## Skapa python distribution
 
